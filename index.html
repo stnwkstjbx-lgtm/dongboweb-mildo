@@ -28,11 +28,6 @@ a,button,input,select,textarea{cursor:none}
 .cur-text{position:fixed;pointer-events:none;z-index:10001;font-size:.55rem;color:var(--warm);letter-spacing:.15em;text-transform:uppercase;opacity:0;transition:opacity .3s;font-weight:500}
 .cur-text.show{opacity:1}
 
-/* ============ PHOTO PLACEHOLDER ============ */
-.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;gap:8px}
-.ph-icon{width:28px;height:28px;opacity:.12}
-.ph-icon svg{width:100%;height:100%;fill:currentColor;color:var(--fg)}
-.ph-text{font-size:.56rem;color:rgba(26,20,16,.1);letter-spacing:.18em;text-transform:uppercase;font-weight:400}
 
 /* ============ FILM GRAIN ============ */
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.018;
@@ -90,7 +85,7 @@ nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.
 
 /* ============ SHOWCASE — 대형 카드 오버랩 ============ */
 .showcase{padding:160px 48px 120px;position:relative}
-.sc-header{margin-bottom:80px;max-width:600px}
+.sc-header{margin-bottom:80px;max-width:760px}
 .sc-label{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:var(--warm);margin-bottom:16px;display:flex;align-items:center;gap:12px}
 .sc-label::before{content:'';width:32px;height:1px;background:var(--warm)}
 .sc-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:16px}
@@ -102,10 +97,10 @@ nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.
 .sc-card-img{aspect-ratio:3/4;overflow:hidden;position:relative}
 .sc-card-inner{width:100%;height:100%;transition:transform .8s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:center;font-size:4rem;filter:sepia(.08) contrast(.95)}
 .sc-card:hover .sc-card-inner{transform:scale(1.06)}
-.sc-bg-1{background:linear-gradient(155deg,#dccfba,#c8b090)}
-.sc-bg-2{background:linear-gradient(155deg,#e4d8c6,#d4c0a0)}
-.sc-bg-3{background:linear-gradient(155deg,#cebfa6,#b8a68c)}
-.sc-bg-4{background:linear-gradient(155deg,#e8dcc8,#d8ccb6)}
+.sc-bg-1{background:url('https://images.unsplash.com/photo-1643188389404-5a10e50023bf?w=800&q=80') center/cover no-repeat}
+.sc-bg-2{background:url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80') center/cover no-repeat}
+.sc-bg-3{background:url('https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=800&q=80') center/cover no-repeat}
+.sc-bg-4{background:url('https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80') center/cover no-repeat}
 
 /* 캡션 — 이미지 내부 하단 오버레이 */
 .sc-caption{position:absolute;bottom:0;left:0;right:0;padding:48px 24px 24px;z-index:2;
@@ -166,9 +161,9 @@ nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.
 .pb-cell{width:280px;height:360px;overflow:hidden;position:relative;flex-shrink:0}
 .pb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;filter:sepia(.06) contrast(.96);transition:all .6s cubic-bezier(.16,1,.3,1)}
 .pb-cell:hover .pb-inner{transform:scale(1.08);filter:sepia(0) contrast(1)}
-.pb-1{background:linear-gradient(155deg,#dccfba,#c8b090)}.pb-2{background:linear-gradient(155deg,#e4d8c6,#d4c0a0)}
-.pb-3{background:linear-gradient(155deg,#cebfa6,#b8a68c)}.pb-4{background:linear-gradient(155deg,#e8dcc8,#d8ccb6)}
-.pb-5{background:linear-gradient(155deg,#d4c4aa,#c0a882)}.pb-6{background:linear-gradient(155deg,#e0d4c0,#d0c0a8)}
+.pb-1{background:url('https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=800&q=80') center/cover no-repeat}.pb-2{background:url('https://images.unsplash.com/photo-1541167760496-1628856ab772?w=800&q=80') center/cover no-repeat}
+.pb-3{background:url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=800&q=80') center/cover no-repeat}.pb-4{background:url('https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=800&q=80') center/cover no-repeat}
+.pb-5{background:url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&q=80') center/cover no-repeat}.pb-6{background:url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=800&q=80') center/cover no-repeat}
 @keyframes photoSlide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* INSTA LINK */
@@ -240,7 +235,7 @@ footer a:hover{color:var(--fg)}
 @media(min-width:1400px){
   .showcase,.process-band,.menu-section,.info-section{
     padding-left:calc((100vw - 1200px)/2);padding-right:calc((100vw - 1200px)/2)}
-  .sc-header,.proc-header{max-width:600px}
+  .sc-header{max-width:760px}.proc-header{max-width:600px}
 }
 /* ============ RESPONSIVE ============ */
 @media(max-width:768px){
@@ -330,10 +325,10 @@ footer a:hover{color:var(--fg)}
     <p class="sc-desc">작은 오픈 키친, 따뜻한 원목 인테리어, 골목 안쪽 조용한 테라스.</p>
   </div>
   <div class="sc-grid">
-    <div class="sc-card rv rv-d1" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-1"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">공간 사진</span></div></div><div class="sc-caption"><h3>오픈 키친</h3><p>매일 새벽 크루아상이 구워지는 곳</p></div></div></div>
-    <div class="sc-card rv rv-d2" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-2"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">공간 사진</span></div></div><div class="sc-caption"><h3>창가 자리</h3><p>아침 햇살이 드는 윈도우 시트</p></div></div></div>
-    <div class="sc-card rv rv-d3" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-3"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">공간 사진</span></div></div><div class="sc-caption"><h3>테라스</h3><p>골목 안쪽, 조용한 야외석</p></div></div></div>
-    <div class="sc-card rv rv-d4" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-4"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">공간 사진</span></div></div><div class="sc-caption"><h3>진열장</h3><p>매일 오전, 빵이 채워지는 순간</p></div></div></div>
+    <div class="sc-card rv rv-d1" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-1"></div><div class="sc-caption"><h3>오픈 키친</h3><p>매일 새벽 크루아상이 구워지는 곳</p></div></div></div>
+    <div class="sc-card rv rv-d2" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-2"></div><div class="sc-caption"><h3>창가 자리</h3><p>아침 햇살이 드는 윈도우 시트</p></div></div></div>
+    <div class="sc-card rv rv-d3" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-3"></div><div class="sc-caption"><h3>테라스</h3><p>골목 안쪽, 조용한 야외석</p></div></div></div>
+    <div class="sc-card rv rv-d4" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-4"></div><div class="sc-caption"><h3>진열장</h3><p>매일 오전, 빵이 채워지는 순간</p></div></div></div>
   </div>
 </section>
 
@@ -414,18 +409,18 @@ footer a:hover{color:var(--fg)}
 <!-- ======== PHOTO BAND ======== -->
 <div class="photo-band" id="photo">
   <div class="photo-row">
-    <div class="pb-cell"><div class="pb-inner pb-1"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-2"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-3"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-4"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-5"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-6"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-1"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-2"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-3"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-4"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-5"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
-    <div class="pb-cell"><div class="pb-inner pb-6"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-1"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-2"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-3"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-4"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-5"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-6"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-1"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-2"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-3"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-4"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-5"></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-6"></div></div>
   </div>
 </div>
 <div class="insta-strip"><a href="https://instagram.com/mildo.bakery" target="_blank" rel="noopener noreferrer">@mildo.bakery →</a></div>
@@ -505,13 +500,18 @@ document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 const lb=document.getElementById('lb'),lbInner=document.getElementById('lbInner'),lbTitle=document.getElementById('lbTitle'),lbDesc=document.getElementById('lbDesc'),lbCap=document.getElementById('lbCap'),lbCount=document.getElementById('lbCount');
 const lbItems=[];let lbIdx=0;
 const bgMap={
-  'sc-bg-1':'linear-gradient(155deg,#dccfba,#c8b090)','sc-bg-2':'linear-gradient(155deg,#e4d8c6,#d4c0a0)',
-  'sc-bg-3':'linear-gradient(155deg,#cebfa6,#b8a68c)','sc-bg-4':'linear-gradient(155deg,#e8dcc8,#d8ccb6)',
-  'pb-1':'linear-gradient(155deg,#dccfba,#c8b090)','pb-2':'linear-gradient(155deg,#e4d8c6,#d4c0a0)',
-  'pb-3':'linear-gradient(155deg,#cebfa6,#b8a68c)','pb-4':'linear-gradient(155deg,#e8dcc8,#d8ccb6)',
-  'pb-5':'linear-gradient(155deg,#d4c4aa,#c0a882)','pb-6':'linear-gradient(155deg,#e0d4c0,#d0c0a8)'
+  'sc-bg-1':'url(https://images.unsplash.com/photo-1643188389404-5a10e50023bf?w=1200&q=80) center/cover no-repeat',
+  'sc-bg-2':'url(https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&q=80) center/cover no-repeat',
+  'sc-bg-3':'url(https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=1200&q=80) center/cover no-repeat',
+  'sc-bg-4':'url(https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&q=80) center/cover no-repeat',
+  'pb-1':'url(https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=1200&q=80) center/cover no-repeat',
+  'pb-2':'url(https://images.unsplash.com/photo-1541167760496-1628856ab772?w=1200&q=80) center/cover no-repeat',
+  'pb-3':'url(https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=1200&q=80) center/cover no-repeat',
+  'pb-4':'url(https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=1200&q=80) center/cover no-repeat',
+  'pb-5':'url(https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=1200&q=80) center/cover no-repeat',
+  'pb-6':'url(https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&q=80) center/cover no-repeat'
 };
-const phSVG='<div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div>';
+
 
 // Showcase 카드 수집
 document.querySelectorAll('.sc-card').forEach((card,i)=>{
@@ -545,7 +545,7 @@ function renderLb(){
   lbInner.style.opacity='0';
   setTimeout(()=>{
     lbInner.style.background=bgMap[item.bg]||'var(--cream)';
-    lbInner.innerHTML=phSVG;
+    lbInner.innerHTML='';
     lbInner.style.opacity='1';
   },150);
   if(item.title){lbCap.style.display='';lbTitle.textContent=item.title;lbDesc.textContent=item.desc}
