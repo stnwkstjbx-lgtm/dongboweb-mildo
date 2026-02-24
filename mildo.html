@@ -1,0 +1,600 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>밀도 Mildo — 매일 아침, 갓 구운 빵</title>
+<meta name="description" content="성수동 골목 베이커리 카페 밀도. 매일 새벽 직접 구운 빵과 핸드드립.">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@200;300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FAF6F0;--fg:#1a1410;--warm:#C4956A;--warm2:#A07548;
+  --cream:#F0E8DA;--dim:#8C7E6E;--white:#fff;
+  --serif:'DM Serif Display',serif;--sans:'Noto Sans KR',sans-serif;
+}
+html{scroll-behavior:smooth;cursor:none}
+body{font-family:var(--sans);background:var(--bg);color:var(--fg);overflow-x:hidden;font-weight:300;cursor:none;-webkit-font-smoothing:antialiased}
+::selection{background:var(--fg);color:var(--bg)}
+a,button,input,select,textarea{cursor:none}
+::-webkit-scrollbar{width:0}
+
+/* ============ CUSTOM CURSOR ============ */
+.cur{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--fg);pointer-events:none;z-index:10000;mix-blend-mode:difference;transition:transform .1s}
+.cur-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1px solid rgba(26,20,16,.12);pointer-events:none;z-index:9999;transition:all .25s cubic-bezier(.16,1,.3,1)}
+.cur-ring.hover{width:80px;height:80px;border-color:var(--warm);background:rgba(196,149,106,.06)}
+.cur-ring.nav-hover{width:56px;height:56px;background:rgba(196,149,106,.08);border-color:var(--warm)}
+.cur-text{position:fixed;pointer-events:none;z-index:10001;font-size:.55rem;color:var(--warm);letter-spacing:.15em;text-transform:uppercase;opacity:0;transition:opacity .3s;font-weight:500}
+.cur-text.show{opacity:1}
+
+/* ============ PHOTO PLACEHOLDER ============ */
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;gap:8px}
+.ph-icon{width:28px;height:28px;opacity:.12}
+.ph-icon svg{width:100%;height:100%;fill:currentColor;color:var(--fg)}
+.ph-text{font-size:.56rem;color:rgba(26,20,16,.1);letter-spacing:.18em;text-transform:uppercase;font-weight:400}
+
+/* ============ FILM GRAIN ============ */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.018;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;background-size:180px}
+
+/* ============ NAV ============ */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:24px 48px;display:flex;align-items:center;justify-content:space-between;transition:all .6s;mix-blend-mode:difference;color:var(--white)}
+nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.88);backdrop-filter:blur(24px);padding:16px 48px}
+.nav-logo{font-family:var(--serif);font-size:1.1rem;text-decoration:none;color:inherit;font-style:italic;letter-spacing:.05em}
+.nav-right{display:flex;align-items:center;gap:28px}
+.nav-link{font-size:.6rem;color:inherit;text-decoration:none;letter-spacing:.16em;text-transform:uppercase;opacity:.5;transition:opacity .3s}
+.nav-link:hover{opacity:1}
+.nav-cta-wrap{overflow:hidden;border:1px solid currentColor;opacity:.5;transition:opacity .3s}
+.nav-cta-wrap:hover{opacity:1}
+.nav-cta{display:block;padding:8px 20px;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:inherit;text-decoration:none;transition:all .4s}
+.nav-cta:hover{background:currentColor;color:var(--bg)}
+.hbg{display:none;background:none;border:none;flex-direction:column;gap:5px;padding:4px}.hbg span{width:18px;height:1px;background:currentColor;display:block}
+
+/* ============ HERO — 초대형 타이포 ============ */
+.hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;background:var(--fg);color:var(--bg);overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a1410 0%,#2a2018 30%,#3a2c1e 60%,#1a1410 100%)}
+/* 미묘한 그리드 텍스처 */
+.hero-bg::after{content:'';position:absolute;inset:0;background-image:
+  linear-gradient(rgba(196,149,106,.02) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(196,149,106,.02) 1px,transparent 1px);background-size:80px 80px}
+
+.hero-content{position:relative;z-index:2;text-align:center;width:100%;padding:0 48px}
+
+/* 거대한 "밀도" 타이포 */
+.hero-big{font-family:var(--serif);font-size:clamp(8rem,22vw,20rem);line-height:.82;letter-spacing:-.04em;font-weight:400;margin-bottom:8px;
+  background:linear-gradient(180deg,rgba(250,246,240,1) 0%,rgba(250,246,240,.4) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* 서브 타이포: 히어로 하단에 정보 배치 */
+.hero-info{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:32px 48px;display:flex;justify-content:space-between;align-items:flex-end}
+.hero-left-info{max-width:300px}
+.hero-left-info p{font-size:.78rem;color:rgba(250,246,240,.3);line-height:2;font-weight:200}
+.hero-right-info{text-align:right;display:flex;flex-direction:column;gap:2px}
+.hero-right-info span{font-size:.55rem;color:rgba(250,246,240,.2);letter-spacing:.2em;text-transform:uppercase;line-height:2.2}
+
+/* 스크롤 힌트 */
+.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-hint span{font-size:.5rem;color:rgba(250,246,240,.15);letter-spacing:.3em;text-transform:uppercase}
+.scroll-line{width:1px;height:28px;position:relative;overflow:hidden}
+.scroll-line::after{content:'';position:absolute;top:-100%;left:0;width:1px;height:100%;background:rgba(196,149,106,.4);animation:scrollDown 2s ease-in-out infinite}
+@keyframes scrollDown{0%{top:-100%}50%{top:0}100%{top:100%}}
+
+/* ============ MARQUEE ============ */
+.marquee{overflow:hidden;padding:20px 0;background:var(--cream);border-top:1px solid rgba(26,20,16,.04);border-bottom:1px solid rgba(26,20,16,.04)}
+.marquee-track{display:flex;gap:48px;animation:marquee 35s linear infinite;white-space:nowrap;width:max-content}
+.marquee-track span{font-family:var(--serif);font-size:.85rem;color:var(--dim);font-style:italic;letter-spacing:.06em;opacity:.5}
+.marquee-track .dot{color:var(--warm);opacity:.3}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ============ SHOWCASE — 대형 카드 오버랩 ============ */
+.showcase{padding:160px 48px 120px;position:relative}
+.sc-header{margin-bottom:80px;max-width:600px}
+.sc-label{font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:var(--warm);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.sc-label::before{content:'';width:32px;height:1px;background:var(--warm)}
+.sc-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:16px}
+.sc-desc{font-size:.86rem;color:var(--dim);line-height:2.2;font-weight:200}
+
+/* 대형 카드: 이미지가 크게 + 캡션 오버랩 */
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1000px;margin:0 auto}
+.sc-card{position:relative;overflow:hidden;cursor:pointer;group:true}
+.sc-card-img{aspect-ratio:3/4;overflow:hidden;position:relative}
+.sc-card-inner{width:100%;height:100%;transition:transform .8s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:center;font-size:4rem;filter:sepia(.08) contrast(.95)}
+.sc-card:hover .sc-card-inner{transform:scale(1.06)}
+.sc-bg-1{background:linear-gradient(155deg,#dccfba,#c8b090)}
+.sc-bg-2{background:linear-gradient(155deg,#e4d8c6,#d4c0a0)}
+.sc-bg-3{background:linear-gradient(155deg,#cebfa6,#b8a68c)}
+.sc-bg-4{background:linear-gradient(155deg,#e8dcc8,#d8ccb6)}
+
+/* 캡션 — 이미지 내부 하단 오버레이 */
+.sc-caption{position:absolute;bottom:0;left:0;right:0;padding:48px 24px 24px;z-index:2;
+  background:linear-gradient(transparent,rgba(26,20,16,.6));
+  transform:translateY(4px);opacity:0;transition:all .5s cubic-bezier(.16,1,.3,1)}
+.sc-card:hover .sc-caption{transform:translateY(0);opacity:1}
+.sc-caption h3{font-family:var(--serif);font-size:1rem;margin-bottom:2px;color:var(--bg)}
+.sc-caption p{font-size:.68rem;color:rgba(250,246,240,.5);letter-spacing:.04em}
+
+/* 두 번째 카드를 아래로 밀어서 비대칭 */
+.sc-card:nth-child(2){margin-top:80px}
+.sc-card:nth-child(3){margin-top:-40px}
+
+/* ============ PROCESS — 재료/프로세스 다크 밴드 ============ */
+.process-band{background:var(--fg);color:var(--bg);padding:120px 48px;position:relative;overflow:hidden}
+.process-band::before{content:'CRAFT';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--serif);font-size:clamp(10rem,25vw,22rem);color:rgba(250,246,240,.012);pointer-events:none;white-space:nowrap;letter-spacing:.15em}
+.proc-inner{max-width:960px;position:relative;z-index:1;margin:0 auto}
+.proc-header{margin-bottom:64px;max-width:480px}
+.proc-header .sc-label{color:rgba(196,149,106,.5)}
+.proc-header h2{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.6rem);margin-bottom:12px;letter-spacing:-.01em}
+.proc-header p{font-size:.84rem;color:rgba(250,246,240,.25);line-height:2.2;font-weight:200}
+
+/* 프로세스 타임라인 — 가로 스텝 */
+.proc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.ps{background:rgba(250,246,240,.025);padding:36px 28px;position:relative;transition:all .5s cubic-bezier(.16,1,.3,1);border-top:2px solid transparent}
+.ps:hover{background:rgba(250,246,240,.05);border-top-color:var(--warm)}
+.ps-num{font-family:var(--serif);font-size:.55rem;color:rgba(196,149,106,.35);letter-spacing:.2em;margin-bottom:16px;display:block}
+.ps-icon{font-size:1.8rem;margin-bottom:14px;filter:grayscale(.3);opacity:.7;transition:all .4s}
+.ps:hover .ps-icon{opacity:1;filter:grayscale(0);transform:scale(1.1)}
+.ps h3{font-family:var(--serif);font-size:1rem;margin-bottom:8px;font-weight:400;letter-spacing:.02em}
+.ps p{font-size:.72rem;color:rgba(250,246,240,.25);line-height:1.8;font-weight:200}
+
+/* 하단 재료 키워드 */
+.proc-keywords{display:flex;gap:12px;margin-top:48px;flex-wrap:wrap}
+.pk{font-size:.58rem;color:rgba(250,246,240,.2);letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border:1px solid rgba(250,246,240,.06);transition:all .3s}
+.pk:hover{color:rgba(196,149,106,.6);border-color:rgba(196,149,106,.15)}
+
+/* ============ MENU — 풀와이드 + 번호 시스템 ============ */
+.menu-section{padding:140px 48px;background:var(--bg)}
+.menu-wrap{max-width:800px;margin:0 auto}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:48px}
+.mc-title{font-family:var(--serif);font-size:1.4rem;color:var(--fg);margin-bottom:24px;letter-spacing:.02em;display:flex;align-items:center;gap:12px}
+.mc-num{font-size:.6rem;color:var(--warm);letter-spacing:.15em;font-family:var(--sans);font-weight:400}
+.mi{padding:12px 0;border-bottom:1px solid rgba(26,20,16,.04);transition:all .35s cubic-bezier(.16,1,.3,1);cursor:default}
+.mi:hover{padding-left:10px;border-color:var(--warm)}
+.mi-row{display:flex;align-items:baseline}
+.mi-n{font-size:.86rem;font-weight:300}
+.mi-d{flex:1;margin:0 10px;border-bottom:1px dotted rgba(26,20,16,.06)}
+.mi-p{font-family:var(--serif);font-size:.9rem;color:var(--warm2)}
+.mi-b{display:inline-flex;font-size:.4rem;background:var(--warm);color:var(--white);padding:2px 7px;border-radius:2px;margin-left:6px;letter-spacing:.06em;font-weight:700;vertical-align:middle}
+.mi-detail{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;font-size:.68rem;color:var(--dim);line-height:1.5;padding-left:2px}
+.mi:hover .mi-detail{max-height:36px;opacity:1;margin-top:5px}
+
+/* ============ PHOTO BAND — 풀블리드 수평 밴드 ============ */
+.photo-band{overflow:hidden;position:relative}
+.photo-row{display:flex;gap:3px;width:max-content;animation:photoSlide 40s linear infinite}
+.photo-row:hover{animation-play-state:paused}
+.pb-cell{width:280px;height:360px;overflow:hidden;position:relative;flex-shrink:0}
+.pb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;filter:sepia(.06) contrast(.96);transition:all .6s cubic-bezier(.16,1,.3,1)}
+.pb-cell:hover .pb-inner{transform:scale(1.08);filter:sepia(0) contrast(1)}
+.pb-1{background:linear-gradient(155deg,#dccfba,#c8b090)}.pb-2{background:linear-gradient(155deg,#e4d8c6,#d4c0a0)}
+.pb-3{background:linear-gradient(155deg,#cebfa6,#b8a68c)}.pb-4{background:linear-gradient(155deg,#e8dcc8,#d8ccb6)}
+.pb-5{background:linear-gradient(155deg,#d4c4aa,#c0a882)}.pb-6{background:linear-gradient(155deg,#e0d4c0,#d0c0a8)}
+@keyframes photoSlide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* INSTA LINK */
+.insta-strip{display:flex;justify-content:center;padding:20px;background:var(--cream);border-bottom:1px solid rgba(26,20,16,.04)}
+.insta-strip a{font-size:.72rem;color:var(--dim);text-decoration:none;letter-spacing:.1em;transition:color .3s}
+.insta-strip a:hover{color:var(--warm)}
+
+/* ============ INFO — 미니멀 수평 ============ */
+.info-section{padding:120px 48px;background:var(--bg)}
+.info-layout{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;max-width:900px;margin:48px auto 0}
+.info-col h4{font-size:.48rem;letter-spacing:.35em;text-transform:uppercase;color:var(--warm);margin-bottom:16px;font-weight:400}
+.info-col p{font-size:.86rem;color:var(--dim);line-height:2.2;font-weight:300}
+.map-btn{display:inline-flex;align-items:center;gap:8px;margin-top:20px;color:var(--fg);text-decoration:none;font-size:.72rem;font-weight:400;
+  padding:11px 24px;border:1px solid rgba(26,20,16,.1);transition:all .4s cubic-bezier(.16,1,.3,1);letter-spacing:.06em}
+.map-btn:hover{background:var(--fg);color:var(--bg);border-color:var(--fg);transform:translateY(-2px)}
+
+/* ============ FOOTER ============ */
+footer{padding:48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(26,20,16,.04)}
+footer p{font-size:.6rem;color:var(--dim);letter-spacing:.08em}
+footer a{color:var(--warm);text-decoration:none;font-size:.6rem;font-style:italic;transition:color .3s}
+footer a:hover{color:var(--fg)}
+
+/* ============ FLOATING ============ */
+.kakao-float{position:fixed;bottom:28px;right:28px;width:52px;height:52px;border-radius:50%;background:#FEE500;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.1rem;z-index:90;box-shadow:0 4px 24px rgba(0,0,0,.06);transition:all .4s cubic-bezier(.16,1,.3,1)}
+.kakao-float:hover{transform:translateY(-4px) scale(1.06);box-shadow:0 12px 32px rgba(0,0,0,.1)}
+.mobile-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(250,246,240,.94);backdrop-filter:blur(24px);border-top:1px solid rgba(26,20,16,.04);padding:10px 16px;z-index:100}
+.mb-inner{display:flex;gap:8px}.mobile-bar a{flex:1;text-align:center;padding:14px;text-decoration:none;font-size:.82rem;font-weight:400;letter-spacing:.04em;transition:all .3s}
+.m-line{border:1.5px solid var(--fg);color:var(--fg)}.m-fill{background:var(--fg);color:var(--bg)}
+
+/* ============ LIGHTBOX ============ */
+.lb-overlay{position:fixed;inset:0;z-index:10010;background:rgba(26,20,16,.92);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(.16,1,.3,1)}
+.lb-overlay.open{opacity:1;pointer-events:auto}
+.lb-container{position:relative;width:min(86vw,800px);aspect-ratio:3/4;overflow:hidden;
+  transform:scale(.92) translateY(12px);transition:transform .5s cubic-bezier(.16,1,.3,1);border-radius:2px}
+.lb-overlay.open .lb-container{transform:scale(1) translateY(0)}
+.lb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;filter:sepia(.06) contrast(.96);transition:opacity .25s ease}
+.lb-caption{position:absolute;bottom:0;left:0;right:0;padding:48px 32px 32px;
+  background:linear-gradient(transparent,rgba(26,20,16,.7));pointer-events:none}
+.lb-caption h3{font-family:var(--serif);font-size:1.2rem;color:var(--bg);margin-bottom:4px}
+.lb-caption p{font-size:.72rem;color:rgba(250,246,240,.45);letter-spacing:.04em}
+
+/* 닫기 */
+.lb-close{position:absolute;top:24px;right:24px;z-index:10012;width:40px;height:40px;border:none;background:rgba(250,246,240,.06);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s}
+.lb-close:hover{background:rgba(250,246,240,.12);transform:rotate(90deg)}
+.lb-close svg{width:16px;height:16px;stroke:rgba(250,246,240,.5);stroke-width:1.5;fill:none}
+
+/* 좌우 네비 */
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:10012;width:44px;height:44px;border:none;
+  background:rgba(250,246,240,.04);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s}
+.lb-nav:hover{background:rgba(250,246,240,.1)}
+.lb-nav svg{width:18px;height:18px;stroke:rgba(250,246,240,.45);stroke-width:1.5;fill:none}
+.lb-prev{left:24px}.lb-next{right:24px}
+
+/* 카운터 */
+.lb-counter{position:absolute;top:28px;left:32px;z-index:10012;font-size:.55rem;color:rgba(250,246,240,.25);letter-spacing:.2em;font-family:var(--serif)}
+
+/* ============ ANIMATIONS ============ */
+.rv{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}.rv.show{opacity:1;transform:none}
+.rv-d1{transition-delay:.1s}.rv-d2{transition-delay:.2s}.rv-d3{transition-delay:.3s}.rv-d4{transition-delay:.4s}
+/* 히어로 텍스트 등장 */
+.hero-reveal{opacity:0;transform:translateY(30px);animation:heroIn 1.2s cubic-bezier(.16,1,.3,1) forwards}
+.hero-reveal-d1{animation-delay:.3s}.hero-reveal-d2{animation-delay:.6s}.hero-reveal-d3{animation-delay:.9s}
+@keyframes heroIn{to{opacity:1;transform:none}}
+
+
+/* ============ WIDESCREEN ============ */
+@media(min-width:1400px){
+  .showcase,.process-band,.menu-section,.info-section{
+    padding-left:calc((100vw - 1200px)/2);padding-right:calc((100vw - 1200px)/2)}
+  .sc-header,.proc-header{max-width:600px}
+}
+/* ============ RESPONSIVE ============ */
+@media(max-width:768px){
+  html,body,a,button{cursor:auto}.cur,.cur-ring,.cur-text{display:none}
+  nav{padding:16px 20px;mix-blend-mode:normal;color:var(--white);background:transparent}
+  .nav-right{display:none}.hbg{display:flex}
+  nav.scrolled{padding:12px 20px;color:var(--fg);background:rgba(250,246,240,.92);backdrop-filter:blur(24px)}
+  .hero-content{padding:0 20px}
+  .hero-big{font-size:clamp(5rem,20vw,8rem)}
+  .hero-info{padding:24px 20px;flex-direction:column;gap:16px;align-items:flex-start}
+  .hero-right-info{text-align:left}
+  .showcase{padding:80px 20px}.sc-grid{grid-template-columns:1fr;gap:48px}.sc-card:nth-child(2),.sc-card:nth-child(3){margin-top:0}
+  .sc-caption{transform:none;opacity:1}
+  .process-band{padding:80px 20px}.proc-steps{grid-template-columns:1fr 1fr;gap:2px}
+  .ps{padding:28px 20px}
+  .menu-section{padding:80px 20px}.menu-grid{grid-template-columns:1fr;gap:36px}
+  .mi-detail{max-height:36px;opacity:1;margin-top:4px}
+  .pb-cell{width:200px;height:260px}
+  .info-section{padding:80px 20px}.info-layout{grid-template-columns:1fr;gap:28px}
+  footer{flex-direction:column;gap:8px;padding:32px 20px 100px}
+  .kakao-float{display:none}.mobile-bar{display:block}
+  .lb-container{width:92vw;aspect-ratio:3/4}
+  .lb-prev{left:8px}.lb-next{right:8px}
+  .lb-nav{width:36px;height:36px}
+  .lb-counter{top:20px;left:20px}
+  .lb-close{top:16px;right:16px}
+}
+</style></head><body>
+
+<!-- CURSOR -->
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="ring"></div>
+<div class="cur-text" id="curText"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#">Mildo</a>
+  <div class="nav-right">
+    <a class="nav-link" href="#showcase">Space</a>
+    <a class="nav-link" href="#menu">Menu</a>
+    <a class="nav-link" href="#info">Visit</a>
+    <div class="nav-cta-wrap"><a class="nav-cta" href="https://pf.kakao.com/_mildo" target="_blank" rel="noopener noreferrer">Contact</a></div>
+  </div>
+  <button class="hbg"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ======== HERO ======== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-big hero-reveal">밀도</div>
+  </div>
+  <div class="hero-info">
+    <div class="hero-left-info hero-reveal hero-reveal-d1">
+      <p>새벽 5시에 시작하는 하루.<br>AOP 버터, 36겹 크루아상,<br>싱글 오리진 핸드드립 한 잔.</p>
+    </div>
+    <div class="hero-right-info hero-reveal hero-reveal-d2">
+      <span>Seongsu-dong Bakery Café</span>
+      <span>Tue — Sun · 8:00 — 20:00</span>
+      <span>성수역 2번출구 5분</span>
+    </div>
+  </div>
+  <div class="scroll-hint hero-reveal hero-reveal-d3"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee"><div class="marquee-track">
+  <span>Butter Croissant 36 Layers</span><span class="dot">·</span>
+  <span>Single Origin Hand Drip</span><span class="dot">·</span>
+  <span>Since 2020 Seongsu</span><span class="dot">·</span>
+  <span>Open 8AM Every Morning</span><span class="dot">·</span>
+  <span>AOP Butter 100%</span><span class="dot">·</span>
+  <span>Sourdough 48h Ferment</span><span class="dot">·</span>
+  <span>Butter Croissant 36 Layers</span><span class="dot">·</span>
+  <span>Single Origin Hand Drip</span><span class="dot">·</span>
+  <span>Since 2020 Seongsu</span><span class="dot">·</span>
+  <span>Open 8AM Every Morning</span><span class="dot">·</span>
+  <span>AOP Butter 100%</span><span class="dot">·</span>
+  <span>Sourdough 48h Ferment</span><span class="dot">·</span>
+</div></div>
+
+<!-- ======== SHOWCASE ======== -->
+<section class="showcase rv" id="showcase">
+  <div class="sc-header">
+    <div class="sc-label">Our Space</div>
+    <h2 class="sc-title">매일 새벽, 오븐에 불이 켜지고<br>성수동 골목에 빵 냄새가 번집니다.</h2>
+    <p class="sc-desc">작은 오픈 키친, 따뜻한 원목 인테리어, 골목 안쪽 조용한 테라스.</p>
+  </div>
+  <div class="sc-grid">
+    <div class="sc-card rv rv-d1" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-1"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">공간 사진</span></div></div><div class="sc-caption"><h3>오픈 키친</h3><p>매일 새벽 크루아상이 구워지는 곳</p></div></div></div>
+    <div class="sc-card rv rv-d2" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-2"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">공간 사진</span></div></div><div class="sc-caption"><h3>창가 자리</h3><p>아침 햇살이 드는 윈도우 시트</p></div></div></div>
+    <div class="sc-card rv rv-d3" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-3"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">공간 사진</span></div></div><div class="sc-caption"><h3>테라스</h3><p>골목 안쪽, 조용한 야외석</p></div></div></div>
+    <div class="sc-card rv rv-d4" data-hover="View"><div class="sc-card-img"><div class="sc-card-inner sc-bg-4"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">공간 사진</span></div></div><div class="sc-caption"><h3>진열장</h3><p>매일 오전, 빵이 채워지는 순간</p></div></div></div>
+  </div>
+</section>
+
+<!-- ======== PROCESS — 재료와 과정 ======== -->
+<section class="process-band rv">
+  <div class="proc-inner">
+    <div class="proc-header">
+      <div class="sc-label">Our Craft</div>
+      <h2>하나의 크루아상이<br>완성되기까지</h2>
+      <p>새벽 5시, 오븐에 불이 켜집니다.<br>좋은 재료와 긴 시간만이 만들 수 있는 맛.</p>
+    </div>
+    <div class="proc-steps">
+      <div class="ps" data-hover="Detail">
+        <span class="ps-num">01</span>
+        <div class="ps-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="8" width="18" height="10" rx="2"/><path d="M7 8V6a5 5 0 0110 0v2"/></svg></div>
+        <h3>AOP 버터</h3>
+        <p>프랑스 AOP 인증 발효버터. 풍미가 다릅니다. 마가린·식물성 유지 일절 사용하지 않습니다.</p>
+      </div>
+      <div class="ps" data-hover="Detail">
+        <span class="ps-num">02</span>
+        <div class="ps-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>18시간 저온숙성</h3>
+        <p>냉장고에서 천천히 발효합니다. 시간이 만드는 깊은 풍미와 결을 위해 하루를 기다립니다.</p>
+      </div>
+      <div class="ps" data-hover="Detail">
+        <span class="ps-num">03</span>
+        <div class="ps-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 18h16M4 14h16M4 10h16M7 6h10"/></svg></div>
+        <h3>36겹 수작업</h3>
+        <p>밀대로 직접 밀고 접습니다. 한 겹 한 겹이 오븐에서 부풀어 바삭한 층이 됩니다.</p>
+      </div>
+      <div class="ps" data-hover="Detail">
+        <span class="ps-num">04</span>
+        <div class="ps-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2c0 4-4 6-4 10a4 4 0 108 0c0-4-4-6-4-10z"/><path d="M12 18a2 2 0 01-2-2c0-2 2-3 2-5 0 2 2 3 2 5a2 2 0 01-2 2z"/></svg></div>
+        <h3>당일 소진</h3>
+        <p>그날 구운 빵은 그날 팝니다. 남은 빵은 다음 날 판매하지 않습니다. 갓 구운 맛만 드립니다.</p>
+      </div>
+    </div>
+    <div class="proc-keywords">
+      <span class="pk">AOP Certified Butter</span>
+      <span class="pk">Natural Fermentation</span>
+      <span class="pk">Hand-Folded 36 Layers</span>
+      <span class="pk">Baked Fresh Daily</span>
+      <span class="pk">Single Origin Coffee</span>
+      <span class="pk">No Preservatives</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======== MENU ======== -->
+<section class="menu-section rv" id="menu">
+  <div class="menu-wrap">
+    <div class="sc-label">Menu</div>
+    <h2 class="sc-title">메뉴</h2>
+    <p class="sc-desc">매일 새벽 직접 반죽하고 구운 빵.<br>계절마다 바뀌는 싱글 오리진 원두.</p>
+    <div class="menu-grid">
+      <div>
+        <div class="mc-title"><span class="mc-num">01</span> Bread</div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">버터 크루아상 <span class="mi-b">SIGNATURE</span></span><span class="mi-d"></span><span class="mi-p">4,500</span></div><div class="mi-detail">AOP 버터 100% · 18시간 저온숙성 · 36겹</div></div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">팥 앙버터</span><span class="mi-d"></span><span class="mi-p">5,000</span></div><div class="mi-detail">국내산 통팥 · 발효버터 크림</div></div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">사워도우 바게트</span><span class="mi-d"></span><span class="mi-p">6,500</span></div><div class="mi-detail">자연발효종 48시간 · 통밀 20%</div></div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">얼그레이 스콘 <span class="mi-b">HOT</span></span><span class="mi-d"></span><span class="mi-p">3,800</span></div><div class="mi-detail">유기농 얼그레이 · 클로티드 크림 별도</div></div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">초코 브라우니</span><span class="mi-d"></span><span class="mi-p">4,200</span></div><div class="mi-detail">발로나 72% 다크 · 퍼지 식감</div></div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">까눌레</span><span class="mi-d"></span><span class="mi-p">3,500</span></div><div class="mi-detail">바닐라빈 · 럼 · 밀랍코팅</div></div>
+      </div>
+      <div>
+        <div class="mc-title"><span class="mc-num">02</span> Coffee & Drink</div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">핸드드립 <span class="mi-b">PICK</span></span><span class="mi-d"></span><span class="mi-p">5,500</span></div><div class="mi-detail">주마다 바뀌는 싱글 오리진 · V60</div></div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">아메리카노</span><span class="mi-d"></span><span class="mi-p">4,500</span></div><div class="mi-detail">에스프레소 더블샷 · HOT / ICE</div></div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">카페라떼</span><span class="mi-d"></span><span class="mi-p">5,000</span></div><div class="mi-detail">서울우유 바리스타 · 라떼아트</div></div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">바닐라 라떼</span><span class="mi-d"></span><span class="mi-p">5,500</span></div><div class="mi-detail">마다가스카르 바닐라빈 시럽</div></div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">딸기 라떼 <span class="mi-b">NEW</span></span><span class="mi-d"></span><span class="mi-p">6,500</span></div><div class="mi-detail">논산 설향딸기 · 우유 베이스</div></div>
+        <div class="mi"><div class="mi-row"><span class="mi-n">유자 에이드</span><span class="mi-d"></span><span class="mi-p">5,500</span></div><div class="mi-detail">고흥 유자청 · 탄산수</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PHOTO BAND ======== -->
+<div class="photo-band" id="photo">
+  <div class="photo-row">
+    <div class="pb-cell"><div class="pb-inner pb-1"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-2"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-3"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-4"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-5"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-6"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-1"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-2"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-3"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-4"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-5"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+    <div class="pb-cell"><div class="pb-inner pb-6"><div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div></div></div>
+  </div>
+</div>
+<div class="insta-strip"><a href="https://instagram.com/mildo.bakery" target="_blank" rel="noopener noreferrer">@mildo.bakery →</a></div>
+
+<!-- ======== INFO ======== -->
+<section class="info-section rv" id="info">
+  <div class="sc-label">Visit Us</div>
+  <h2 class="sc-title">찾아오시는 길</h2>
+  <div class="info-layout">
+    <div class="info-col">
+      <h4>Address</h4>
+      <p>서울 성동구 연무장5가길 00, 1층<br>성수역 2번 출구 도보 5분</p>
+      <a href="https://map.kakao.com" class="map-btn" target="_blank" rel="noopener noreferrer">카카오맵 →</a>
+    </div>
+    <div class="info-col">
+      <h4>Hours</h4>
+      <p>화 — 일 8:00 – 20:00<br>월요일 정기 휴무<br>빵 소진 시 조기 마감</p>
+    </div>
+    <div class="info-col">
+      <h4>Note</h4>
+      <p>주차 공간 없음<br>반려동물 동반 불가<br>매장 내 노트북 사용 자제<br>전 메뉴 포장 가능</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 밀도 Mildo — Seongsu</p>
+  <a href="https://instagram.com/mildo.bakery" target="_blank" rel="noopener noreferrer">@mildo.bakery →</a>
+</footer>
+
+<a href="https://pf.kakao.com/_mildo" class="kakao-float" target="_blank" rel="noopener noreferrer"><svg width="22" height="22" viewBox="0 0 24 24" fill="#3C1E1E"><path d="M12 3C6.48 3 2 6.58 2 10.9c0 2.78 1.86 5.21 4.65 6.6-.15.53-.96 3.41-1 3.56 0 .08.03.16.09.21a.27.27 0 00.24.03c.32-.05 3.7-2.44 4.28-2.85.56.08 1.14.12 1.74.12 5.52 0 10-3.58 10-7.97S17.52 3 12 3z"/></svg></a>
+<div class="mobile-bar"><div class="mb-inner">
+  <a href="tel:02-000-0000" class="m-line">전화</a>
+  <a href="https://pf.kakao.com/_mildo" class="m-fill" target="_blank" rel="noopener noreferrer">카카오톡</a>
+</div></div>
+
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lb">
+  <span class="lb-counter" id="lbCount"></span>
+  <button class="lb-close" id="lbClose"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+  <button class="lb-nav lb-prev" id="lbPrev"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+  <button class="lb-nav lb-next" id="lbNext"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
+  <div class="lb-container">
+    <div class="lb-inner" id="lbInner"></div>
+    <div class="lb-caption" id="lbCap"><h3 id="lbTitle"></h3><p id="lbDesc"></p></div>
+  </div>
+</div>
+
+<script>
+// CUSTOM CURSOR
+const cur=document.getElementById('cur'),ring=document.getElementById('ring'),ct=document.getElementById('curText');
+let mx=0,my=0,cx=0,cy=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){cx+=(mx-cx)*.18;cy+=(my-cy)*.18;rx+=(mx-rx)*.07;ry+=(my-ry)*.07;
+  cur.style.transform=`translate(${cx-4}px,${cy-4}px)`;
+  ring.style.transform=`translate(${rx-18}px,${ry-18}px)`;
+  ct.style.transform=`translate(${rx+24}px,${ry-8}px)`;
+  requestAnimationFrame(loop)})();
+
+// hover states
+document.querySelectorAll('[data-hover]').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.classList.add('hover');ct.textContent=el.dataset.hover;ct.classList.add('show')});
+  el.addEventListener('mouseleave',()=>{ring.classList.remove('hover');ct.classList.remove('show')});
+});
+document.querySelectorAll('.nav-link,.nav-cta,.map-btn,.kakao-float,.lb-close,.lb-nav').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('nav-hover'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('nav-hover'));
+});
+
+// NAV
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>100)},{passive:true});
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target)}})},{threshold:.05,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+// LIGHTBOX
+const lb=document.getElementById('lb'),lbInner=document.getElementById('lbInner'),lbTitle=document.getElementById('lbTitle'),lbDesc=document.getElementById('lbDesc'),lbCap=document.getElementById('lbCap'),lbCount=document.getElementById('lbCount');
+const lbItems=[];let lbIdx=0;
+const bgMap={
+  'sc-bg-1':'linear-gradient(155deg,#dccfba,#c8b090)','sc-bg-2':'linear-gradient(155deg,#e4d8c6,#d4c0a0)',
+  'sc-bg-3':'linear-gradient(155deg,#cebfa6,#b8a68c)','sc-bg-4':'linear-gradient(155deg,#e8dcc8,#d8ccb6)',
+  'pb-1':'linear-gradient(155deg,#dccfba,#c8b090)','pb-2':'linear-gradient(155deg,#e4d8c6,#d4c0a0)',
+  'pb-3':'linear-gradient(155deg,#cebfa6,#b8a68c)','pb-4':'linear-gradient(155deg,#e8dcc8,#d8ccb6)',
+  'pb-5':'linear-gradient(155deg,#d4c4aa,#c0a882)','pb-6':'linear-gradient(155deg,#e0d4c0,#d0c0a8)'
+};
+const phSVG='<div class="ph"><div class="ph-icon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div><span class="ph-text">사진</span></div>';
+
+// Showcase 카드 수집
+document.querySelectorAll('.sc-card').forEach((card,i)=>{
+  const bg=card.querySelector('.sc-card-inner');
+  const cap=card.querySelector('.sc-caption');
+  const cls=[...bg.classList].find(c=>c.startsWith('sc-bg-'))||'';
+  lbItems.push({bg:cls,title:cap?.querySelector('h3')?.textContent||'',desc:cap?.querySelector('p')?.textContent||''});
+  card.style.cursor='pointer';
+  card.addEventListener('click',()=>openLb(i));
+});
+// Photo Band 셀 수집 (원본 6개만, 마키 복제분 제외)
+const scLen=lbItems.length;
+const pbCells=document.querySelectorAll('.pb-cell');
+const pbOrigCount=pbCells.length/2;
+for(let i=0;i<pbOrigCount;i++){
+  const cell=pbCells[i];
+  const inner=cell.querySelector('.pb-inner');
+  const cls=[...inner.classList].find(c=>c.startsWith('pb-')&&c!=='pb-inner')||'';
+  lbItems.push({bg:cls,title:'',desc:''});
+  cell.style.cursor='pointer';
+  cell.addEventListener('click',()=>openLb(scLen+i));
+  // 복제 셀도 같은 인덱스로 바인딩
+  pbCells[i+pbOrigCount].style.cursor='pointer';
+  pbCells[i+pbOrigCount].addEventListener('click',()=>openLb(scLen+i));
+}
+
+function openLb(idx){lbIdx=idx;renderLb();lb.classList.add('open');document.body.style.overflow='hidden';document.querySelector('.kakao-float').style.display='none'}
+function closeLb(){lb.classList.remove('open');document.body.style.overflow='';document.querySelector('.kakao-float').style.display=''}
+function renderLb(){
+  const item=lbItems[lbIdx];if(!item)return;
+  lbInner.style.opacity='0';
+  setTimeout(()=>{
+    lbInner.style.background=bgMap[item.bg]||'var(--cream)';
+    lbInner.innerHTML=phSVG;
+    lbInner.style.opacity='1';
+  },150);
+  if(item.title){lbCap.style.display='';lbTitle.textContent=item.title;lbDesc.textContent=item.desc}
+  else{lbCap.style.display='none'}
+  lbCount.textContent=`${lbIdx+1} / ${lbItems.length}`;
+}
+document.getElementById('lbClose').addEventListener('click',closeLb);
+document.getElementById('lbPrev').addEventListener('click',()=>{lbIdx=(lbIdx-1+lbItems.length)%lbItems.length;renderLb()});
+document.getElementById('lbNext').addEventListener('click',()=>{lbIdx=(lbIdx+1)%lbItems.length;renderLb()});
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
+document.addEventListener('keydown',e=>{
+  if(!lb.classList.contains('open'))return;
+  if(e.key==='Escape')closeLb();
+  if(e.key==='ArrowLeft'){lbIdx=(lbIdx-1+lbItems.length)%lbItems.length;renderLb()}
+  if(e.key==='ArrowRight'){lbIdx=(lbIdx+1)%lbItems.length;renderLb()}
+});
+// Touch swipe
+let tx=0;
+lb.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+lb.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50){
+    if(dx<0){lbIdx=(lbIdx+1)%lbItems.length}else{lbIdx=(lbIdx-1+lbItems.length)%lbItems.length}
+    renderLb();
+  }
+});
+
+// IMAGE ASSET PROTECTION
+document.addEventListener('contextmenu',e=>{
+  if(e.target.closest('.sc-card,.pb-cell,.lb-overlay,img'))e.preventDefault();
+});
+document.addEventListener('dragstart',e=>{
+  if(e.target.tagName==='IMG'||e.target.closest('.sc-card,.pb-cell,.lb-overlay'))e.preventDefault();
+});
+
+// 포트폴리오 프리뷰용 자동스크롤 (iframe 안에 있을 때만 작동)
+var _isPreview=false;try{_isPreview=window.self!==window.top}catch(e){_isPreview=true}
+if(_isPreview){
+  var _asY=0,_asSpd=2.25,_asPaused=false;
+  function _asRun(){
+    if(!_asPaused){
+      _asY+=_asSpd;
+      var maxY=document.documentElement.scrollHeight-window.innerHeight;
+      if(_asY>=maxY){_asPaused=true;setTimeout(function(){_asY=0;window.scrollTo(0,0);_asPaused=false},800)}
+      else{window.scrollTo(0,_asY)}
+    }
+    requestAnimationFrame(_asRun);
+  }
+  window.addEventListener('load',function(){setTimeout(_asRun,1200)});
+}
+</script>
+</body></html>
