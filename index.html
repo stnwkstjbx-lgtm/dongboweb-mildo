@@ -1221,7 +1221,8 @@ var toastBox=document.getElementById('toastBox');
 function showToast(msg,icon){
   var t=document.createElement('div');
   t.className='toast';
-  t.innerHTML=(icon?'<span class="toast-icon">'+icon+'</span>':'')+msg;
+  if(icon){var ic=document.createElement('span');ic.className='toast-icon';ic.textContent=icon;t.appendChild(ic)}
+  var tx=document.createTextNode(msg);t.appendChild(tx);
   toastBox.appendChild(t);
   requestAnimationFrame(function(){t.classList.add('show')});
   setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},400)},2800);
