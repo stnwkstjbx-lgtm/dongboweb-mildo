@@ -1145,6 +1145,8 @@ nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.
 </div>
 
 <script>
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+window.scrollTo(0,0);
 // ========== PRELOADER ==========
 var preBrand=document.getElementById('preBrand');
 var preChars='Mildo'.split('');
