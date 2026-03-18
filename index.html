@@ -367,6 +367,8 @@ nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.
 .catering-icon svg{width:22px;height:22px;stroke:var(--warm);fill:none;stroke-width:1.2}
 .catering-text h4{font-size:.82rem;font-weight:500;margin-bottom:4px}
 .catering-text p{font-size:.72rem;color:var(--dim);line-height:1.8;font-weight:200}
+.catering-examples{display:flex;gap:12px;margin-top:10px;flex-wrap:wrap}
+.catering-ex{font-size:.6rem;padding:4px 10px;background:rgba(196,149,106,.08);border:1px solid var(--card-border);border-radius:20px;color:var(--dim);white-space:nowrap;letter-spacing:.03em}
 .catering-btn{padding:10px 20px;background:none;border:1px solid var(--card-border);color:var(--fg);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:all .3s;white-space:nowrap;font-family:var(--sans)}
 .catering-btn:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 
@@ -399,6 +401,26 @@ nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.
 .season-badge::before,.season-badge::after{content:'';width:24px;height:1px;background:rgba(250,246,240,.3)}
 .season-title{font-family:var(--serif);font-size:clamp(1.2rem,2.5vw,1.8rem);margin-bottom:8px;font-style:italic;letter-spacing:.02em}
 .season-desc{font-size:.78rem;opacity:.7;line-height:1.8;font-weight:200}
+/* ============ BAKE SCHEDULE ============ */
+.bake-section{padding:80px 48px;text-align:center}
+.bake-wrap{max-width:900px;margin:0 auto}
+.bake-timeline{display:flex;justify-content:space-between;align-items:flex-start;margin-top:48px;position:relative}
+.bake-timeline::before{content:'';position:absolute;top:42px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--card-border),var(--card-border),transparent)}
+.bake-slot{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;position:relative}
+.bake-time{font-family:var(--serif);font-size:.9rem;font-style:italic;color:var(--warm);letter-spacing:.03em}
+.bake-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--card-border);background:var(--bg);position:relative;z-index:1;transition:all .3s;margin:8px 0}
+.bake-dot.active{border-color:var(--warm);background:var(--warm);box-shadow:0 0 12px rgba(196,149,106,.3)}
+.bake-name{font-size:.8rem;font-weight:500;letter-spacing:.05em}
+.bake-sub{font-size:.65rem;color:var(--dim);font-weight:300}
+.bake-note{font-size:.65rem;color:var(--dim);margin-top:28px;font-weight:300;letter-spacing:.03em}
+@media(max-width:768px){.bake-timeline{flex-direction:column;gap:20px;align-items:flex-start;padding-left:40px}
+.bake-timeline::before{top:0;bottom:0;left:18px;right:auto;width:1px;height:auto}
+.bake-slot{flex-direction:row;gap:12px;text-align:left}.bake-dot{margin:0}.bake-time{width:40px;text-align:right}}
+
+.season-items{display:flex;justify-content:center;gap:32px;margin:20px 0 16px;flex-wrap:wrap}
+.season-item{display:flex;flex-direction:column;align-items:center;gap:4px}
+.season-item-name{font-family:var(--serif);font-size:.9rem;font-style:italic;letter-spacing:.02em}
+.season-item-price{font-size:.6rem;letter-spacing:.1em;opacity:.6}
 .season-tag{display:inline-block;margin-top:16px;padding:6px 16px;border:1px solid rgba(250,246,240,.25);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;white-space:nowrap}
 
 /* ============ PHOTO BAND ============ */
@@ -639,6 +661,7 @@ nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.
   <a class="dn-item active" href="#hero"><span class="dn-label">Home</span><span class="dn-dot"></span></a>
   <a class="dn-item" href="#showcase"><span class="dn-label">Space</span><span class="dn-dot"></span></a>
   <a class="dn-item" href="#process"><span class="dn-label">Craft</span><span class="dn-dot"></span></a>
+  <a class="dn-item" href="#bake"><span class="dn-label">Bake</span><span class="dn-dot"></span></a>
   <a class="dn-item" href="#story"><span class="dn-label">Story</span><span class="dn-dot"></span></a>
   <a class="dn-item" href="#menu"><span class="dn-label">Menu</span><span class="dn-dot"></span></a>
   <a class="dn-item" href="#photo"><span class="dn-label">Gallery</span><span class="dn-dot"></span></a>
@@ -817,6 +840,48 @@ nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.
   </div>
 </section>
 
+<!-- ======== BAKE SCHEDULE ======== -->
+<section class="bake-section rv" id="bake">
+  <div class="bake-wrap">
+    <div class="sc-label">Daily Bake</div>
+    <h2 class="sc-title">오늘의 베이킹 스케줄</h2>
+    <p class="sc-desc">매일 새벽 5시, 오븐에 불이 켜집니다. 갓 구운 빵은 아래 시간에 만나보세요.</p>
+    <div class="bake-timeline">
+      <div class="bake-slot rv rv-d1">
+        <div class="bake-time">05:00</div>
+        <div class="bake-dot"></div>
+        <div class="bake-name">반죽 시작</div>
+        <div class="bake-sub">새벽 작업 개시</div>
+      </div>
+      <div class="bake-slot rv rv-d2">
+        <div class="bake-time">08:00</div>
+        <div class="bake-dot active"></div>
+        <div class="bake-name">크루아상</div>
+        <div class="bake-sub">첫 배치 · 오전 중 소진</div>
+      </div>
+      <div class="bake-slot rv rv-d3">
+        <div class="bake-time">09:00</div>
+        <div class="bake-dot"></div>
+        <div class="bake-name">사워도우</div>
+        <div class="bake-sub">바게트 · 캄파뉴</div>
+      </div>
+      <div class="bake-slot rv rv-d4">
+        <div class="bake-time">11:00</div>
+        <div class="bake-dot"></div>
+        <div class="bake-name">런치 메뉴</div>
+        <div class="bake-sub">샌드위치 · 키슈</div>
+      </div>
+      <div class="bake-slot rv rv-d5">
+        <div class="bake-time">14:00</div>
+        <div class="bake-dot"></div>
+        <div class="bake-name">오후 배치</div>
+        <div class="bake-sub">스콘 · 쿠키 · 디저트</div>
+      </div>
+    </div>
+    <p class="bake-note">인기 메뉴는 오전 중 소진될 수 있습니다</p>
+  </div>
+</section>
+
 <!-- ======== STORY ======== -->
 <section class="story-section rv" id="story">
   <div class="story-inner">
@@ -970,10 +1035,15 @@ nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.
 <!-- ======== SEASON BANNER ======== -->
 <div class="season-banner rv">
   <div class="season-inner">
-    <div class="season-badge">Seasonal Menu</div>
-    <div class="season-title">계절 한정 메뉴 운영 중</div>
-    <div class="season-desc">매 시즌 새로운 재료로 만드는 한정 크루아상과 디저트.<br>지금만 만나볼 수 있는 맛을 놓치지 마세요.</div>
-    <div class="season-tag">Every Season</div>
+    <div class="season-badge">Spring 2026</div>
+    <div class="season-title">봄 한정 메뉴</div>
+    <div class="season-items">
+      <div class="season-item"><span class="season-item-name">딸기 크루아상</span><span class="season-item-price">5,500원</span></div>
+      <div class="season-item"><span class="season-item-name">벚꽃 라떼</span><span class="season-item-price">5,000원</span></div>
+      <div class="season-item"><span class="season-item-name">레몬 타르트</span><span class="season-item-price">6,000원</span></div>
+    </div>
+    <div class="season-desc">제철 딸기와 직접 만든 커스터드 크림, 봄의 맛을 담았습니다.</div>
+    <div class="season-tag">3월 — 5월 한정</div>
   </div>
 </div>
 
@@ -1087,6 +1157,11 @@ nav.scrolled{mix-blend-mode:normal;color:var(--fg);background:rgba(250,246,240,.
       <div class="catering-text">
         <h4>대량 주문 &amp; 케이터링</h4>
         <p>기업 행사, 돌잔치, 생일파티 등 크루아상 대량 주문을 받습니다. 10개 이상부터 전날 예약 필수.</p>
+        <div class="catering-examples">
+          <span class="catering-ex">🎁 선물 박스 (6개입)</span>
+          <span class="catering-ex">🏢 기업 행사 (30개~)</span>
+          <span class="catering-ex">🎂 파티 플래터</span>
+        </div>
       </div>
       <a href="https://pf.kakao.com/_zAqqX_mildo" class="catering-btn" target="_blank" rel="noopener noreferrer">문의하기</a>
     </div>
